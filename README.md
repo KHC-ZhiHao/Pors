@@ -1,5 +1,7 @@
 # 棋子還是塞子？
 
+[![NPM Version][npm-image]][npm-url]
+
 `pors`是一個簡單的批量排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
 
 ## 棋子 - pawn
@@ -64,16 +66,17 @@ pw.add(done => done())
 
 ### 取消監聽
 
-`event`事件呼叫後會回傳一個`listener`物件，藉由宣告off取消監聽：
+`event`事件呼叫後會回傳一個`listener`物件，藉由宣告`off`取消監聽：
 
 ```js
-let listener = pw.on('done', (event) => {})
+let listener = pawn().on('done', (event) => {})
 listener.off()
 ```
 
 藉由`off`與id接口取消`event`：
 
 ```js
+let pw = pawn()
 let listener = pw.on('done', (event) => {})
 pw.off('done', listener.id)
 ```
@@ -89,7 +92,7 @@ on('done', () => {
     console.log('123')
 })
 
-pw.add(done => done())
+pawn().add(done => done())
 ```
 
 ### 通用事件
@@ -109,7 +112,7 @@ pw.add(done => done())
 每個執行續執行錯誤會觸發該事件。
 
 ```js
-pw.add((done, error) => {
+pawn().add((done, error) => {
     error() // 由此觸發
 })
 ```
@@ -119,7 +122,7 @@ pw.add((done, error) => {
 `each`可以一次迭代一個陣列：
 
 ```js
-pw.each([1,2,3,4], (value, index, done, error) => {
+pawn().each([1,2,3,4], (value, index, done, error) => {
     // do something...
 })
 ```
@@ -177,3 +180,6 @@ step.on('process', ({ loaded, totalThread }) => {
     console.log(`${loaded}/${totalThread}`)
 })
 ```
+
+[npm-image]: https://img.shields.io/npm/v/pors.svg
+[npm-url]: https://npmjs.org/package/pors

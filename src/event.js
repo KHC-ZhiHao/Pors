@@ -1,5 +1,5 @@
-const Base = require('./Base')
-const Helper = require('./Helper')
+const Base = require('./base')
+const Helper = require('./helper')
 
 class Event extends Base {
     constructor(name, parent) {

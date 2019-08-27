@@ -121,6 +121,27 @@ describe('#Stopper', () => {
                 done()
             })
     })
+    it('close', function(done) {
+        let count = 0
+        stopper(2)
+            .add((done, error) => {
+                count += 1
+            })
+            .add((done) => {
+                count += 1
+            })
+            .add((done) => {
+                setTimeout(() => {
+                    count += 1
+                }, 5)
+            })
+            .start(() => {})
+            .close()
+        setTimeout(() => {
+            expect(count).to.equal(2)
+            done()
+        }, 10)
+    })
 })
 
 describe('#Pawn', () => {
@@ -178,5 +199,23 @@ describe('#Pawn', () => {
             done()
         })
         expect(count).to.equal(2)
+    })
+    it('clear', function(done) {
+        let count = 0
+        pawn(2)
+            .add((done) => {
+                done()
+            })
+            .add((done) => {
+                done()
+            })
+            .add((done) => {
+                done()
+            })
+            .clear()
+        setTimeout(() => {
+            expect(count).to.equal(0)
+            done()
+        }, 10)
     })
 })

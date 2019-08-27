@@ -25,6 +25,10 @@ class Core extends Base {
             })
         }
     }
+
+    clear() {
+        this.threads = []
+    }
 }
 
 Core.Unit = class extends Base {

@@ -1,5 +1,5 @@
 const expect = require('chai').expect
-const { pawn, stopper, on } = require('../src/index')
+const { pawn, pump, stopper, on } = require('../src/index')
 
 describe('#Core', () => {
     it('event', function(done) {
@@ -178,5 +178,14 @@ describe('#Pawn', () => {
             done()
         })
         expect(count).to.equal(2)
+    })
+})
+
+describe('#Pump', () => {
+    it('test', function(done) {
+        let p = pump(done)
+        p.add(2)
+        p.press()
+        p.press()
     })
 })

@@ -181,5 +181,17 @@ step.on('process', ({ loaded, totalThread }) => {
 })
 ```
 
+## 幫浦 - pump
+
+一個累積計數等待回呼的工具：
+
+```js
+import pors from 'pors'
+let pump = pors.pump(() => console.log('OuO'))
+pump.add(2)
+pump.press()
+pump.press() // 'OuO'
+```
+
 [npm-image]: https://img.shields.io/npm/v/pors.svg
 [npm-url]: https://npmjs.org/package/pors

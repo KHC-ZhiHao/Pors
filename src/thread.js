@@ -7,8 +7,8 @@ class Thread extends Base {
         this.id = Helper.generateId()
         this.event = event
         this.thread = thread
-        this.done = (data) => this.close('done', data)
-        this.error = (data) => this.close('error', data)
+        this.done = data => this.close('done', data)
+        this.error = data => this.close('error', data)
         if (typeof thread !== 'function') {
             this.$devError('add', 'Thread not a function.')
         }

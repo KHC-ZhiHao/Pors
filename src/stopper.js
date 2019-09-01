@@ -1,4 +1,4 @@
-const Core = require('./Core')
+const Core = require('./core')
 
 class StopperCore extends Core {
     constructor(unit, parallel) {

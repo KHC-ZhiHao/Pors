@@ -1,4 +1,4 @@
-const Core = require('./Core')
+const Core = require('./core')
 
 class PawnCore extends Core {
     constructor(unit, parallel) {

@@ -2,7 +2,7 @@
 
 [![NPM Version][npm-image]][npm-url]
 
-`pors`是一個簡單的批量排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
+`pors`是一個簡單的批次執行排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
 
 ## 棋子 - pawn
 
@@ -127,6 +127,14 @@ pawn().each([1,2,3,4], (value, index, done, error) => {
 })
 ```
 
+## 清空排程
+
+`clear`可以清空所有正在等待執行的排程：
+
+```js
+pawn().add(d => d()).clear()
+```
+
 ## 塞子 - stopper
 
 塞子是預先加入執行續，最後再宣告執行：
@@ -191,6 +199,24 @@ let pump = pors.pump(() => console.log('OuO'))
 pump.add(2)
 pump.press()
 pump.press() // 'OuO'
+```
+
+### 關閉程序
+
+執行start後會得到一個`process`物件，宣告`close`可以中斷執行續：
+
+```js
+import { stopper } from 'pors'
+
+let count = 0
+stopper(2)
+    .add((done, error) => {
+        error('123')
+    })
+    .start((error) => {
+        console.log(error)
+    })
+    .close()
 ```
 
 [npm-image]: https://img.shields.io/npm/v/pors.svg

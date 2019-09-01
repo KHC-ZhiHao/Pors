@@ -10,7 +10,7 @@ class StopperCore extends Core {
         if (typeof callback !== 'function') {
             this.$devError('start', 'Callback not a function.')
         }
-        new StopperProcess(this, callback)
+        return (new StopperProcess(this, callback)).exports
     }
 }
 
@@ -25,6 +25,11 @@ class StopperProcess {
         this.callback = callback
         this.initEvent()
         this.start()
+        this.exports = {
+            close: () => {
+                this.close()
+            }
+        }
     }
 
     initEvent() {
@@ -54,10 +59,14 @@ class StopperProcess {
     stop(error) {
         if (this.isStop === false) {
             this.callback(error)
-            this.doneEvent.off()
-            this.errorEvent.off()
-            this.isStop = true
+            this.close()
         }
+    }
+
+    close() {
+        this.doneEvent.off()
+        this.errorEvent.off()
+        this.isStop = true
     }
 
     run() {
@@ -77,7 +86,7 @@ class Stopper extends Core.Unit {
     }
 
     start(callback) {
-        this._core.start(callback)
+        return this._core.start(callback)
     }
 }
 

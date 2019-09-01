@@ -12,11 +12,11 @@ class PawnCore extends Core {
             this.queue += 1
         })
         this.event.on('done', () => {
-            this.queue -= 1
+            this.lessQueue()
             this.run()
         })
         this.event.on('error', () => {
-            this.queue -= 1
+            this.lessQueue()
             this.run()
         })
     }
@@ -24,6 +24,18 @@ class PawnCore extends Core {
     add(thread) {
         super.add(thread)
         this.run()
+    }
+
+    lessQueue() {
+        this.queue -= 1
+        if (this.queue <= 0) {
+            this.queue = 0
+        }
+    }
+
+    clear() {
+        super.clear()
+        this.queue = 0
     }
 
     run() {

@@ -189,18 +189,6 @@ step.on('process', ({ loaded, totalThread }) => {
 })
 ```
 
-## 幫浦 - pump
-
-一個累積計數等待回呼的工具：
-
-```js
-import pors from 'pors'
-let pump = pors.pump(() => console.log('OuO'))
-pump.add(2)
-pump.press()
-pump.press() // 'OuO'
-```
-
 ### 關閉程序
 
 執行start後會得到一個`process`物件，宣告`close`可以中斷執行續：
@@ -217,6 +205,18 @@ stopper(2)
         console.log(error)
     })
     .close()
+```
+
+## 幫浦 - pump
+
+一個累積計數等待回呼的工具：
+
+```js
+import pors from 'pors'
+let pump = pors.pump(() => console.log('OuO'))
+pump.add(2)
+pump.press()
+pump.press() // 'OuO'
 ```
 
 [npm-image]: https://img.shields.io/npm/v/pors.svg

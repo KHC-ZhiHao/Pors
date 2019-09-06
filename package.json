@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nyc mocha",
+    "test": "nyc mocha --timeout 2000",
     "build": "mocha && cross-env webpack --progress --hide-modules",
-    "coverage": "coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",

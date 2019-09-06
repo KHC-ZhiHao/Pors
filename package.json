@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha",
     "build": "mocha && cross-env webpack --progress --hide-modules",
     "coverage": "coveralls"
   },
@@ -39,6 +39,7 @@
     "webpack-cli": "^3.3.5"
   },
   "devDependencies": {
-    "coveralls": "^3.0.6"
+    "coveralls": "^3.0.6",
+    "nyc": "^14.1.1"
   }
 }

@@ -2,6 +2,10 @@
 
 [![NPM Version][npm-image]][npm-url]
 
+![build](https://travis-ci.org/KHC-ZhiHao/pors.svg?branch=master)
+
+[![Coverage Status](https://coveralls.io/repos/github/KHC-ZhiHao/pors/badge.svg?branch=master)](https://coveralls.io/github/KHC-ZhiHao/pors?branch=master)
+
 `pors`是一個簡單的批次執行排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
 
 ## 棋子 - pawn

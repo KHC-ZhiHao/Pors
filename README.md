@@ -131,6 +131,14 @@ pawn().each([1,2,3,4], (value, index, done, error) => {
 })
 ```
 
+也可以直接填入數字：
+
+```js
+pawn().each(5, (value, index, done, error) => {
+    // do something...
+})
+```
+
 ## 清空排程
 
 `clear`可以清空所有正在等待執行的排程：

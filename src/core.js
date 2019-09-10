@@ -19,9 +19,15 @@ class Core extends Base {
     }
 
     each(items, callback) {
-        for (let i = 0; i < items.length; i++) {
+        let type = typeof items
+        let length = type === 'number' ? items : items.length
+        for (let i = 0; i < length; i++) {
             this.add((done, error) => {
-                callback(items[i], i, done, error)
+                if (type === 'number') {
+                    callback(i, i, done, error)
+                } else {
+                    callback(items[i], i, done, error)
+                }
             })
         }
     }

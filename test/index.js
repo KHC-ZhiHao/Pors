@@ -188,6 +188,15 @@ describe('#Pawn', () => {
             })
         expect(count).to.equal(16)
     })
+    it('each of number', function() {
+        let count = 0
+        pawn()
+            .each(5, (data, index, done) => {
+                count += data + index
+                done()
+            })
+        expect(count).to.equal(20)
+    })
     it('event', function() {
         let count = 0
         let pw = pawn()

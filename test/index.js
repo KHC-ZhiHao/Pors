@@ -160,7 +160,7 @@ describe('#Pawn', () => {
     })
     it('real', function(close) {
         let now = Date.now()
-        pawn(2)
+        let p = pawn(2)
             .add((done) => {
                 setTimeout(() => {
                     done()
@@ -175,9 +175,12 @@ describe('#Pawn', () => {
                 setTimeout(() => {
                     expect((Date.now() - now) < 300).to.equal(true)
                     done()
-                    close()
                 }, 100)
             })
+        p.on('empty', () => {
+            close()
+        })
+        expect(p.size).to.equal(3)
     })
     it('each', function() {
         let count = 0

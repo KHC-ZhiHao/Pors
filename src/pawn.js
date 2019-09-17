@@ -30,6 +30,7 @@ class PawnCore extends Core {
         this.queue -= 1
         if (this.queue <= 0) {
             this.queue = 0
+            this.event.emit('empty')
         }
     }
 
@@ -52,6 +53,10 @@ class PawnCore extends Core {
 class Pawn extends Core.Unit {
     constructor(parallel) {
         super('Pawn', PawnCore, parallel)
+    }
+
+    get size() {
+        return this._core.threads.length + this._core.queue
     }
 }
 

@@ -10,7 +10,7 @@
 
 ## 棋子 - pawn
 
-`pawn`是一個常駐物件，你可以不斷推送執行續給`pawn`，它會直接執行，若超過同步執行量則會限制運行的狀態。
+`pawn`是一個常駐物件，你可以不斷推送執行續給`pawn`，它會直接執行，若超過同步執行量則會限制同步運行的數量。
 
 ### Example
 
@@ -40,6 +40,35 @@ pawn(2) // 一次允許的執行量，無填入則不會限制
 setTimeout(() => {
     console.log(count) // 2
 }, 1100)
+```
+
+### 成員
+
+#### size
+
+```js
+let pawn = pawn(2).add(done => {
+    setTimeout(() => {
+        count += 1
+        done()
+    }, 1000)
+})
+console.log(pawn.size) // 1
+```
+
+### 事件
+
+#### empty
+
+當系統執行完佇列後觸發
+
+> 系統監聽一樣可以監聽到該事件。
+
+```js
+let step = stopper()
+step.on('empty', () => {
+    console.log('done')
+})
 ```
 
 ## Event
@@ -135,6 +164,7 @@ pawn().each([1,2,3,4], (value, index, done, error) => {
 
 ```js
 pawn().each(5, (value, index, done, error) => {
+    console.log(value === index) // true
     // do something...
 })
 ```

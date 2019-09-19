@@ -50,6 +50,9 @@ class StopperProcess {
     }
 
     start() {
+        if (this.threads.length === 0) {
+            return this.stop()
+        }
         let parallelLength = this.core.parallel || this.threads.length
         for (let i = 0; i < parallelLength; i++) {
             this.run()

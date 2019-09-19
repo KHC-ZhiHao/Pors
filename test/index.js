@@ -102,6 +102,18 @@ describe('#Stopper', () => {
                 done()
             })
     })
+    it('each with no items', function(done) {
+        let count = 0
+        stopper(1)
+            .each([], (data, index, done) => {
+                count += 87
+                done()
+            })
+            .start(() => {
+                expect(count).to.equal(0)
+                done()
+            })
+    })
     it('error', function(done) {
         let count = 0
         stopper(2)

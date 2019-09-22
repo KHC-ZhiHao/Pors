@@ -30,6 +30,8 @@ class PawnCore extends Core {
         this.queue -= 1
         if (this.queue <= 0) {
             this.queue = 0
+        }
+        if (this.threads.length <= 0) {
             this.event.emit('empty')
         }
     }
@@ -48,6 +50,13 @@ class PawnCore extends Core {
             thread.run()
         }
     }
+
+    onEmpty(callback) {
+        if (this.threads.length <= 0) {
+            callback()
+        }
+        return this.event.on('empty', callback)
+    }
 }
 
 class Pawn extends Core.Unit {
@@ -57,6 +66,10 @@ class Pawn extends Core.Unit {
 
     get size() {
         return this._core.threads.length + this._core.queue
+    }
+
+    onEmpty(callback) {
+        return this._core.onEmpty(callback)
     }
 }
 

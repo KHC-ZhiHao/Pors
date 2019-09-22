@@ -187,12 +187,30 @@ describe('#Pawn', () => {
                 setTimeout(() => {
                     expect((Date.now() - now) < 300).to.equal(true)
                     done()
+                    close()
                 }, 100)
             })
-        p.on('empty', () => {
+        expect(p.size).to.equal(3)
+    })
+    it('empty onEmpty', function(close) {
+        let count = 0
+        let p = pawn(1)
+            .add((done) => {
+                count += 1
+                done()
+            })
+            .add((done) => {
+                count += 1
+                done()
+            })
+            .add((done) => {
+                count += 1
+                done()
+            })
+        p.onEmpty(() => {
+            expect(count).to.equal(3)
             close()
         })
-        expect(p.size).to.equal(3)
     })
     it('each', function() {
         let count = 0

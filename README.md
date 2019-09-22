@@ -1,12 +1,26 @@
-# 棋子還是塞子？
+<br>
+<p align="center"><img src="./logo.png"></p>
+<p align="center" style="font-size:2em">pawn or stopper ?</p>
+<p align="center">
+    <a href="https://www.npmjs.com/package/pors"><img src="https://img.shields.io/npm/v/pors.svg"></a>
+    <a href="https://travis-ci.org/KHC-ZhiHao/pors">
+    <img src="https://travis-ci.org/KHC-ZhiHao/pors.svg?branch=master" alt="travis-ci"  style="max-width:100%;">
+    </a>
+    <a href="https://coveralls.io/github/KHC-ZhiHao/pors?branch=master">
+        <img src="https://coveralls.io/repos/github/KHC-ZhiHao/pors/badge.svg?branch=master" alt="Coverage Status"  style="max-width:100%;">
+    </a>
+    <a href="https://standardjs.com/">
+        <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard Code Style"  style="max-width:100%;">
+    </a>
+    <a href="https://github.com/KHC-ZhiHao/pors"><img src="https://img.shields.io/github/stars/KHC-ZhiHao/pors.svg?style=social"></a>
+    <br>
+</p>
 
-[![NPM Version][npm-image]][npm-url]
-
-![build](https://travis-ci.org/KHC-ZhiHao/pors.svg?branch=master)
-
-[![Coverage Status](https://coveralls.io/repos/github/KHC-ZhiHao/pors/badge.svg?branch=master)](https://coveralls.io/github/KHC-ZhiHao/pors?branch=master)
+<br>
 
 `pors`是一個簡單的批次執行排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
+
+---
 
 ## 棋子 - pawn
 
@@ -65,11 +79,24 @@ console.log(pawn.size) // 1
 > 系統監聽一樣可以監聽到該事件。
 
 ```js
-let step = stopper()
-step.on('empty', () => {
+let pawn = pawn()
+pawn.on('empty', () => {
     console.log('done')
 })
 ```
+
+##### 建議使用onEmpty
+
+跟 on 不同的地方在於onEmpty宣告的當下若已經沒有執行續，會觸發一次callback。
+
+```js
+let pawn = pawn()
+pawn.onEmpty(() => {
+    console.log('done')
+})
+```
+
+---
 
 ## Event
 
@@ -150,6 +177,8 @@ pawn().add((done, error) => {
 })
 ```
 
+---
+
 ## 批量處裡
 
 `each`可以一次迭代一個陣列：
@@ -169,6 +198,8 @@ pawn().each(5, (value, index, done, error) => {
 })
 ```
 
+---
+
 ## 清空排程
 
 `clear`可以清空所有正在等待執行的排程：
@@ -176,6 +207,8 @@ pawn().each(5, (value, index, done, error) => {
 ```js
 pawn().add(d => d()).clear()
 ```
+
+---
 
 ## 塞子 - stopper
 
@@ -248,6 +281,8 @@ stopper(2)
     })
     .close()
 ```
+
+---
 
 ## 幫浦 - pump
 

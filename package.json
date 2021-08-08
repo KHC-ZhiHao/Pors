@@ -1,14 +1,14 @@
 {
   "name": "pors",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "pawn or stopper ?",
   "main": "dist/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "nyc mocha --timeout 2000",
-    "build": "mocha && cross-env webpack --progress --hide-modules",
+    "test": "nyc mocha --require ts-node/register ./test/*.ts --timeout 2000",
+    "build": "npm run test && cross-env webpack --progress --hide-modules",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -24,10 +24,16 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
+    "@types/chai": "^4.2.16",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.45",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "eslint": "^6.0.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
+    "ts-loader": "^6.2.2",
     "eslint-config-standard": "^12.0.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.18.0",
@@ -38,6 +44,9 @@
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
     "coveralls": "^3.0.6",
-    "nyc": "^14.1.1"
+    "nyc": "^14.1.1",
+    "tslint": "^6.1.1",
+    "tslint-config-standard": "^9.0.0",
+    "tslint-loader": "^3.5.4"
   }
 }

@@ -1,35 +1,51 @@
-const Base = require('./base')
-const Helper = require('./helper')
+import { ModuleBase } from './base'
+import { Helper } from './helper'
 
-class Event extends Base {
-    constructor(name, parent) {
+type EventContext = {
+    name: string
+    type: string
+    context: any
+}
+
+export type ListenerExport = {
+    id: string
+    off: () => void
+}
+
+export type ListenerCallback = (event: EventContext & { listener: ListenerExport }) => void
+
+export class Event extends ModuleBase {
+    name: string
+    parent?: Event
+    channels: Record<string, Channel>
+    constructor(name: string, parent?: Event) {
         super('Event')
         this.name = name
         this.parent = parent
         this.channels = {}
     }
 
-    addChannel(name) {
-        this.channels[name] = new Channel(this)
+    addChannel(name: string) {
+        this.channels[name] = new Channel()
     }
 
-    getChannel(name) {
+    getChannel(name: string) {
         if (this.channels[name] == null) {
             this.addChannel(name)
         }
         return this.channels[name]
     }
 
-    on(channelName, callback) {
+    on(channelName: string, callback: ListenerCallback) {
         return this.getChannel(channelName).addListener(callback)
     }
 
-    off(channelName, target) {
+    off(channelName: string, target: string | { id: string }) {
         let event = typeof target === 'string' ? target : target.id
         this.getChannel(channelName).removeListener(event)
     }
 
-    emit(channelName, context = {}) {
+    emit(channelName: string, context = {}) {
         let event = {
             name: this.name,
             type: channelName,
@@ -42,41 +58,45 @@ class Event extends Base {
     }
 }
 
-class Channel extends Base {
+class Channel extends ModuleBase {
+    listeners: Record<string, Listener> = {}
     constructor() {
         super('Channel')
-        this.listeners = {}
     }
 
-    hasListener(id) {
+    hasListener(id: string) {
         if (this.listeners[id] == null) {
             this.$devError('hasListener', `Listener id(${id}) not found.`)
         }
     }
 
-    addListener(callback) {
+    addListener(callback: ListenerCallback) {
         if (typeof callback !== 'function') {
-            this.$devError('addListener', `Callback must be a function`, callback)
+            this.$devError('addListener', `Callback must be a function`)
         }
         let id = Helper.generateId()
         this.listeners[id] = new Listener(this, id, callback)
         return this.listeners[id].export
     }
 
-    removeListener(id) {
+    removeListener(id: string) {
         this.hasListener(id)
         delete this.listeners[id]
     }
 
-    broadcast(context) {
+    broadcast(context: EventContext) {
         for (let listener of Object.values(this.listeners)) {
             listener.trigger(context)
         }
     }
 }
 
-class Listener extends Base {
-    constructor(channel, id, callback) {
+class Listener extends ModuleBase {
+    id: string
+    channel: Channel
+    callback: ListenerCallback
+    export: ListenerExport
+    constructor(channel: Channel, id: string, callback: ListenerCallback) {
         super('Listener')
         this.id = id
         this.channel = channel
@@ -87,7 +107,7 @@ class Listener extends Base {
         }
     }
 
-    trigger(context) {
+    trigger(context: EventContext) {
         this.callback({
             ...context,
             listener: this.export
@@ -95,4 +115,4 @@ class Listener extends Base {
     }
 }
 
-module.exports = Event
+export const coreEvent = new Event('core')

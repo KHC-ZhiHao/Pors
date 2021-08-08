@@ -1,9 +1,11 @@
-const Core = require('./core')
+import { Core, CoreUnit } from './core'
+import { ThreadHandler } from './thread'
 
 class PawnCore extends Core {
-    constructor(unit, parallel) {
+    queue = 0
+    parallel: number
+    constructor(unit: Pawn, parallel: number) {
         super('Pawn', unit)
-        this.queue = 0
         this.parallel = parallel
     }
 
@@ -19,9 +21,10 @@ class PawnCore extends Core {
             this.lessQueue()
             this.run()
         })
+        return null
     }
 
-    add(thread) {
+    add(thread: ThreadHandler) {
         super.add(thread)
         this.run()
     }
@@ -51,7 +54,7 @@ class PawnCore extends Core {
         }
     }
 
-    onEmpty(callback) {
+    onEmpty(callback: () => void) {
         if (this.threads.length <= 0) {
             callback()
         }
@@ -59,8 +62,9 @@ class PawnCore extends Core {
     }
 }
 
-class Pawn extends Core.Unit {
-    constructor(parallel) {
+export class Pawn extends CoreUnit {
+    declare _core: PawnCore
+    constructor(parallel: number) {
         super('Pawn', PawnCore, parallel)
     }
 
@@ -68,9 +72,7 @@ class Pawn extends Core.Unit {
         return this._core.threads.length + this._core.queue
     }
 
-    onEmpty(callback) {
+    onEmpty(callback: () => void) {
         return this._core.onEmpty(callback)
     }
 }
-
-module.exports = Pawn

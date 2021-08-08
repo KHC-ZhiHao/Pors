@@ -1,0 +1,12 @@
+import { Pawn as _Pawn } from './pawn';
+import { Pump as _Pump } from './pump';
+import { Stopper as _Stopper } from './stopper';
+import { ListenerCallback } from './event';
+export declare const Pawn: typeof _Pawn;
+export declare const Pump: typeof _Pump;
+export declare const Stopper: typeof _Stopper;
+export declare const pawn: (parallel: number) => _Pawn;
+export declare const pump: (finish: () => void) => _Pump;
+export declare const stopper: (parallel: number) => _Stopper;
+export declare const on: (channelName: string, callback: ListenerCallback) => import("./event").ListenerExport;
+export declare const off: (channelName: string, id: string) => void;

@@ -1,14 +1,19 @@
-const Base = require('./base')
-const Helper = require('./helper')
+import { Event } from './event'
+import { Helper } from './helper'
+import { ModuleBase } from './base'
 
-class Thread extends Base {
-    constructor(event, thread) {
+export type ThreadHandler = (done: (data?: any) => void, error: (data: any) => void) => void
+
+export class Thread extends ModuleBase {
+    id = Helper.generateId()
+    event: Event
+    thread: ThreadHandler
+    done = (data: any) => this.close('done', data)
+    error = (data: any) => this.close('error', data)
+    constructor(event: Event, thread: ThreadHandler) {
         super('Thread')
-        this.id = Helper.generateId()
         this.event = event
         this.thread = thread
-        this.done = data => this.close('done', data)
-        this.error = data => this.close('error', data)
         if (typeof thread !== 'function') {
             this.$devError('add', 'Thread not a function.')
         }
@@ -19,7 +24,7 @@ class Thread extends Base {
         this.thread(this.done, this.error)
     }
 
-    close(type, result) {
+    close(type: any, result: any) {
         this.event.emit(type, {
             id: this.id,
             result,
@@ -29,5 +34,3 @@ class Thread extends Base {
         this.error = () => this.$devError('close', 'This thread is done.')
     }
 }
-
-module.exports = Thread

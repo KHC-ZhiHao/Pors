@@ -1,12 +1,17 @@
-const Core = require('./core')
+import { Thread } from './thread'
+import { Core, CoreUnit } from './core'
+import { Event, ListenerExport } from './event'
+
+type StopperHandler = (error?: any) => void
 
 class StopperCore extends Core {
-    constructor(unit, parallel) {
+    parallel: number
+    constructor(unit: Stopper, parallel: number) {
         super('Stopper', unit)
         this.parallel = parallel
     }
 
-    start(callback) {
+    start(callback: StopperHandler) {
         if (typeof callback !== 'function') {
             this.$devError('start', 'Callback not a function.')
         }
@@ -15,21 +20,26 @@ class StopperCore extends Core {
 }
 
 class StopperProcess {
-    constructor(core, callback) {
+    core: StopperCore
+    event: Event
+    isStop = false
+    loaded = 0
+    threads: Thread[]
+    totalThread: number
+    callback: StopperHandler
+    doneEvent!: ListenerExport
+    errorEvent!: ListenerExport
+    exports = {
+        close: () => this.close()
+    }
+    constructor(core: StopperCore, callback: StopperHandler) {
         this.core = core
         this.event = core.event
-        this.isStop = false
-        this.loaded = 0
         this.threads = core.threads.slice()
         this.totalThread = this.threads.length
         this.callback = callback
         this.initEvent()
         this.start()
-        this.exports = {
-            close: () => {
-                this.close()
-            }
-        }
     }
 
     initEvent() {
@@ -59,7 +69,7 @@ class StopperProcess {
         }
     }
 
-    stop(error) {
+    stop(error?: any) {
         if (this.isStop === false) {
             this.callback(error)
             this.close()
@@ -83,14 +93,13 @@ class StopperProcess {
     }
 }
 
-class Stopper extends Core.Unit {
-    constructor(parallel) {
+export class Stopper extends CoreUnit {
+    declare _core: StopperCore
+    constructor(parallel: number) {
         super('Stopper', StopperCore, parallel)
     }
 
-    start(callback) {
+    start(callback: StopperHandler) {
         return this._core.start(callback)
     }
 }
-
-module.exports = Stopper

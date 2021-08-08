@@ -1,5 +1,7 @@
-class Helper {
-    static getType(target) {
+type Types = 'string' | 'number' | 'bigint' | 'boolean' | 'symbol' | 'undefined' | 'object' | 'function' | 'array' | 'empty' | 'NaN' | 'regexp' | 'promise' | 'buffer'
+
+export class Helper {
+    static getType(target: any): Types {
         let type = typeof target
         if (Array.isArray(target)) {
             return 'array'
@@ -22,8 +24,8 @@ class Helper {
         return type
     }
 
-    static verify(data, validates) {
-        let newData = {}
+    static verify<T extends Record<string, any>>(data: T, validates: Record<string, [boolean, Types[], any?]>): T {
+        let newData: any = {}
         for (let key in validates) {
             let target = data[key]
             let validate = validates[key]
@@ -53,16 +55,11 @@ class Helper {
      */
 
     static generateId() {
-        var now = Date.now()
-        if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
-            now += performance.now()
-        }
+        let now = Date.now()
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (now + Math.random() * 16) % 16 | 0
+            let r = (now + Math.random() * 16) % 16 | 0
             now = Math.floor(now / 16)
             return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
         })
     }
 }
-
-module.exports = Helper

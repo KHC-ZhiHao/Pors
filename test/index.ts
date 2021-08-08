@@ -1,5 +1,6 @@
 const expect = require('chai').expect
-const { pawn, pump, stopper, on } = require('../src/index')
+
+import { pawn, pump, stopper, on } from '../src/index'
 
 describe('#Core', () => {
     it('event', function(done) {
@@ -31,9 +32,9 @@ describe('#Stopper', () => {
         let total = 0
         let totalLoaded = 0
         let ster = stopper(1)
-        ster.on('process', ({ loaded, totalThread }) => {
-            total = totalThread
-            totalLoaded += loaded
+        ster.on('process', ({ context }) => {
+            total = context.totalThread
+            totalLoaded += context.loaded
         })
         ster
             .add((done) => {
@@ -76,7 +77,7 @@ describe('#Stopper', () => {
     })
     it('all', function(done) {
         let count = 0
-        stopper()
+        stopper(10)
             .add((done) => {
                 count += 1
                 done()
@@ -159,7 +160,7 @@ describe('#Stopper', () => {
 describe('#Pawn', () => {
     it('normal', function() {
         let count = 0
-        pawn()
+        pawn(10)
             .add((done) => {
                 count += 1
                 done('1234')
@@ -214,7 +215,7 @@ describe('#Pawn', () => {
     })
     it('each', function() {
         let count = 0
-        pawn()
+        pawn(10)
             .each([1, 1, 1, 1, 2], (data, index, done) => {
                 count += data + index
                 done()
@@ -223,7 +224,7 @@ describe('#Pawn', () => {
     })
     it('each of number', function() {
         let count = 0
-        pawn()
+        pawn(10)
             .each(5, (data, index, done) => {
                 count += data + index
                 done()
@@ -232,7 +233,7 @@ describe('#Pawn', () => {
     })
     it('event', function() {
         let count = 0
-        let pw = pawn()
+        let pw = pawn(10)
         pw.on('done', (event) => {
             expect(typeof event.type).to.equal('string')
             count += 1

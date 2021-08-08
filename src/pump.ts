@@ -1,11 +1,16 @@
-const Base = require('./base')
-const Helper = require('./helper')
+import { Helper } from './helper'
+import { ModuleBase } from './base'
 
-class PumpCore extends Base {
-    constructor(finish) {
+type EachHandler = (press: () => void, count: number) => void
+
+class PumpCore extends ModuleBase {
+    total = 0
+    count = 0
+    options: {
+        finish: () => void
+    }
+    constructor(finish: () => void) {
         super('Pump')
-        this.total = 0
-        this.count = 0
         this.options = Helper.verify({ finish }, {
             finish: [true, ['function']]
         })
@@ -19,21 +24,21 @@ class PumpCore extends Base {
         return this.count
     }
 
-    add(count) {
+    add(count: number) {
         let type = typeof count
         if (count != null && type !== 'number') {
-            this.$devError('add', 'Count not a number.', number)
+            this.$devError('add', 'Count not a number.')
         }
         if (type === 'number' && count < 0) {
-            this.$devError('add', 'Count cannot be negative.', number)
+            this.$devError('add', 'Count cannot be negative.')
         }
         this.total += count
         return this.total
     }
 
-    each(callback) {
+    each(callback: EachHandler) {
         if (typeof callback !== 'function') {
-            this.$devError('each', 'Callback not a function', callback)
+            this.$devError('each', 'Callback not a function')
         }
         let press = this.press.bind(this)
         for (let i = this.count; i < this.total; i++) {
@@ -47,38 +52,34 @@ class PumpCore extends Base {
  * @hideconstructor
  */
 
-class Pump {
-    constructor(finish) {
+export class Pump {
+    _core: PumpCore
+    constructor(finish: () => void) {
         this._core = new PumpCore(finish)
     }
 
     /**
      * 加入指定次數
-     * @param {number} [count=1] 指定次數
      * @returns {number} 總計數
      */
 
-    add(count) {
+    add(count: number) {
         return this._core.add(count)
     }
 
     /**
      * 根據剩餘次數宣告callback，該方法並不會消耗次數
-     * @param {PumpEachCallback} callback 宣告的方法
      */
 
-    each(callback) {
+    each(callback: EachHandler) {
         return this._core.each(callback)
     }
 
     /**
-     * 加一次記數，當計數大於指定次數，呼叫finish
-     * @returns {number} 當下累計計數
+     * 加一次記數，當計數大於指定次數，呼叫 finish
      */
 
     press() {
         return this._core.press()
     }
 }
-
-module.exports = Pump

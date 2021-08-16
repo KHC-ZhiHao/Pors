@@ -56,6 +56,38 @@ setTimeout(() => {
 }, 1100)
 ```
 
+### 優先執行
+
+可以透過 `addFirst` 將該排程插入貯列的最優先：
+
+```js
+import { pawn } from 'pors'
+
+let array = [] as number[]
+pawn(1)
+    .add((done) => {
+        setTimeout(() => {
+            array.push(1)
+            done()
+        }, 25)
+    })
+    .add((done) => {
+        setTimeout(() => {
+            array.push(2)
+            done()
+        }, 25)
+    })
+    .addFirst((done) => {
+        setTimeout(() => {
+            array.push(3)
+            done()
+        }, 25)
+    })
+setTimeout(() => {
+    console.log(array.join()) // 1,3,2
+}, 100)
+```
+
 ### 成員
 
 #### size

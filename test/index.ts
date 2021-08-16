@@ -1,5 +1,4 @@
-const expect = require('chai').expect
-
+import { expect } from 'chai'
 import { pawn, pump, stopper, on } from '../src/index'
 
 describe('#Core', () => {
@@ -170,6 +169,32 @@ describe('#Pawn', () => {
                 done('1234')
             })
         expect(count).to.equal(2)
+    })
+    it('add first', function(close) {
+        let array = [] as number[]
+        pawn(1)
+            .add((done) => {
+                setTimeout(() => {
+                    array.push(1)
+                    done()
+                }, 25)
+            })
+            .add((done) => {
+                setTimeout(() => {
+                    array.push(2)
+                    done()
+                }, 25)
+            })
+            .addFirst((done) => {
+                setTimeout(() => {
+                    array.push(3)
+                    done()
+                }, 25)
+            })
+        setTimeout(() => {
+            expect(array.join()).to.equal('1,3,2')
+            close()
+        }, 100)
     })
     it('real', function(close) {
         let now = Date.now()

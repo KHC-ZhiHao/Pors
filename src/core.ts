@@ -25,6 +25,10 @@ export class Core extends ModuleBase {
         this.threads.push(new Thread(this.event, thread))
     }
 
+    addFirst(thread: ThreadHandler) {
+        this.threads.unshift(new Thread(this.event, thread))
+    }
+
     each(items: number[] | number, callback: EachHandler) {
         if (typeof items === 'number') {
             for (let i = 0; i < items; i++) {

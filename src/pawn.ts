@@ -29,6 +29,11 @@ class PawnCore extends Core {
         this.run()
     }
 
+    addFirst(thread: ThreadHandler) {
+        super.addFirst(thread)
+        this.run()
+    }
+
     lessQueue() {
         this.queue -= 1
         if (this.queue <= 0) {
@@ -70,6 +75,11 @@ export class Pawn extends CoreUnit {
 
     get size() {
         return this._core.threads.length + this._core.queue
+    }
+
+    addFirst(thread: ThreadHandler) {
+        this._core.addFirst(thread)
+        return this
     }
 
     onEmpty(callback: () => void) {

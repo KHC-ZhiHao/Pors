@@ -88,6 +88,19 @@ setTimeout(() => {
 }, 100)
 ```
 
+### 透過 Async Function
+
+可以透過 `addAsync` 省略 done、error 等 callback：
+
+```js
+import { pawn } from 'pors'
+
+let array = [] as number[]
+pawn(1).addAsync(async() => {
+    array.push(1)
+})
+```
+
 ### 成員
 
 #### size
@@ -281,6 +294,19 @@ stopper(2) // 一次允許的執行量，無填入則不會限制
     .start((error) => {
         console.log(error) // '123'
     })
+```
+
+### 透過 Async Function
+
+可以透過 `addAsync` 省略 done、error 等 callback：
+
+```js
+import { stopper } from 'pors'
+
+let array = [] as number[]
+stopper(1).addAsync(async() => {
+    array.push(1)
+})
 ```
 
 ### 塞子事件

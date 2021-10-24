@@ -1,5 +1,5 @@
 import { Core, CoreUnit } from './core'
-import { ThreadHandler } from './thread'
+import { ThreadHandler, ThreadAsyncHandler } from './thread'
 
 class PawnCore extends Core {
     queue = 0
@@ -27,6 +27,17 @@ class PawnCore extends Core {
     add(thread: ThreadHandler) {
         super.add(thread)
         this.run()
+    }
+
+    addAsync(thread: ThreadAsyncHandler) {
+        this.add(async(done, fail) => {
+            try {
+                await thread()
+                done()
+            } catch (error) {
+                fail(error)
+            }
+        })
     }
 
     addFirst(thread: ThreadHandler) {

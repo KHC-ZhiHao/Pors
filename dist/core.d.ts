@@ -9,6 +9,7 @@ export declare class Core extends ModuleBase {
     constructor(name: string, unit: CoreUnit);
     install(): null;
     add(thread: ThreadHandler): void;
+    addFirst(thread: ThreadHandler): void;
     each(items: number[] | number, callback: EachHandler): void;
     clear(): void;
 }

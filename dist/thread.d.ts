@@ -1,6 +1,7 @@
 import { Event } from './event';
 import { ModuleBase } from './base';
 export declare type ThreadHandler = (done: (data?: any) => void, error: (data: any) => void) => void;
+export declare type ThreadAsyncHandler = () => Promise<any>;
 export declare class Thread extends ModuleBase {
     id: string;
     event: Event;

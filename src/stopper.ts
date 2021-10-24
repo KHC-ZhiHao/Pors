@@ -1,4 +1,4 @@
-import { Thread } from './thread'
+import { Thread, ThreadAsyncHandler } from './thread'
 import { Core, CoreUnit } from './core'
 import { Event, ListenerExport } from './event'
 
@@ -97,6 +97,17 @@ export class Stopper extends CoreUnit {
     declare _core: StopperCore
     constructor(parallel: number) {
         super('Stopper', StopperCore, parallel)
+    }
+
+    addAsync(thread: ThreadAsyncHandler) {
+        this.add(async(done, fail) => {
+            try {
+                await thread()
+                done()
+            } catch (error) {
+                fail(error)
+            }
+        })
     }
 
     start(callback: StopperHandler) {

@@ -3,6 +3,7 @@ import { Helper } from './helper'
 import { ModuleBase } from './base'
 
 export type ThreadHandler = (done: (data?: any) => void, error: (data: any) => void) => void
+export type ThreadAsyncHandler = () => Promise<any>
 
 export class Thread extends ModuleBase {
     id = Helper.generateId()

@@ -1,6 +1,6 @@
-import { Thread, ThreadAsyncHandler } from './thread'
 import { Core, CoreUnit } from './core'
 import { Event, ListenerExport } from './event'
+import { Thread, ThreadAsyncHandler } from './thread'
 
 type StopperHandler = (error?: any) => void
 
@@ -108,6 +108,7 @@ export class Stopper extends CoreUnit {
                 fail(error)
             }
         })
+        return this
     }
 
     start(callback: StopperHandler) {

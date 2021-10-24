@@ -29,17 +29,6 @@ class PawnCore extends Core {
         this.run()
     }
 
-    addAsync(thread: ThreadAsyncHandler) {
-        this.add(async(done, fail) => {
-            try {
-                await thread()
-                done()
-            } catch (error) {
-                fail(error)
-            }
-        })
-    }
-
     addFirst(thread: ThreadHandler) {
         super.addFirst(thread)
         this.run()
@@ -90,6 +79,18 @@ export class Pawn extends CoreUnit {
 
     addFirst(thread: ThreadHandler) {
         this._core.addFirst(thread)
+        return this
+    }
+
+    addAsync(thread: ThreadAsyncHandler) {
+        this.add(async(done, fail) => {
+            try {
+                await thread()
+                done()
+            } catch (error) {
+                fail(error)
+            }
+        })
         return this
     }
 

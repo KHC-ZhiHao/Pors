@@ -90,6 +90,20 @@ describe('#Stopper', () => {
                 done()
             })
     })
+    it('all async', function(done) {
+        let count = 0
+        stopper(10)
+            .addAsync(async() => {
+                count += 1
+            })
+            .addAsync(async() => {
+                count += 1
+            })
+            .start(() => {
+                expect(count).to.equal(2)
+                done()
+            })
+    })
     it('each', function(done) {
         let count = 0
         stopper(1)
@@ -167,6 +181,17 @@ describe('#Pawn', () => {
             .add((done) => {
                 count += 1
                 done('1234')
+            })
+        expect(count).to.equal(2)
+    })
+    it('normal async', function() {
+        let count = 0
+        pawn(10)
+            .addAsync(async() => {
+                count += 1
+            })
+            .addAsync(async() => {
+                count += 1
             })
         expect(count).to.equal(2)
     })

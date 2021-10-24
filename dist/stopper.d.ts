@@ -1,5 +1,5 @@
-import { ThreadAsyncHandler } from './thread';
 import { Core, CoreUnit } from './core';
+import { ThreadAsyncHandler } from './thread';
 declare type StopperHandler = (error?: any) => void;
 declare class StopperCore extends Core {
     parallel: number;
@@ -11,7 +11,7 @@ declare class StopperCore extends Core {
 export declare class Stopper extends CoreUnit {
     _core: StopperCore;
     constructor(parallel: number);
-    addAsync(thread: ThreadAsyncHandler): void;
+    addAsync(thread: ThreadAsyncHandler): this;
     start(callback: StopperHandler): {
         close: () => void;
     };

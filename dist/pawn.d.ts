@@ -6,7 +6,6 @@ declare class PawnCore extends Core {
     constructor(unit: Pawn, parallel: number);
     install(): null;
     add(thread: ThreadHandler): void;
-    addAsync(thread: ThreadAsyncHandler): void;
     addFirst(thread: ThreadHandler): void;
     lessQueue(): void;
     clear(): void;
@@ -18,6 +17,7 @@ export declare class Pawn extends CoreUnit {
     constructor(parallel: number);
     get size(): number;
     addFirst(thread: ThreadHandler): this;
+    addAsync(thread: ThreadAsyncHandler): this;
     onEmpty(callback: () => void): import("./event").ListenerExport;
 }
 export {};

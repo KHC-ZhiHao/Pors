@@ -1,7 +1,7 @@
 {
   "name": "pors",
   "version": "0.1.0",
-  "description": "pawn or stopper ?",
+  "description": "Flow control system",
   "main": "dist/index.js",
   "directories": {
     "test": "test"
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/KHC-ZhiHao/pors.git"
   },
   "author": "khczhihao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/KHC-ZhiHao/pors/issues"
   },

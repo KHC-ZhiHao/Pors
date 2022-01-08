@@ -2,7 +2,7 @@
 <p align="center"><img src="./logo.png"></p>
 
 <h1 align="center">Pors</h1>
-<h3 align="center">Flow Control System</h3>
+<h3 align="center">Flow control system</h3>
 
 <p align="center">
     <a href="https://www.npmjs.com/package/pors">

@@ -9,7 +9,7 @@
   "scripts": {
     "test": "nyc mocha --require ts-node/register ./test/*.ts --timeout 2000",
     "build": "npm run test && cross-env webpack --progress --hide-modules",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc --reporter=lcov npm test"
   },
   "repository": {
     "type": "git",

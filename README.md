@@ -1,10 +1,15 @@
 <br>
 <p align="center"><img src="./logo.png"></p>
-<p align="center" style="font-size:2em">pawn or stopper ?</p>
+<p align="center" style="font-size:2em">Pors</p>
 <p align="center">
-    <a href="https://www.npmjs.com/package/pors"><img src="https://img.shields.io/npm/v/pors.svg"></a>
-    <a href="https://travis-ci.org/KHC-ZhiHao/pors">
-    <img src="https://travis-ci.org/KHC-ZhiHao/pors.svg?branch=master" alt="travis-ci"  style="max-width:100%;">
+    <a href="https://www.npmjs.com/package/pors">
+        <img src="https://img.shields.io/npm/v/pors.svg">
+    </a>
+    <a href='https://github.com/KHC-ZhiHao/pors/actions'>
+        <img src='https://github.com/KHC-ZhiHao/pors/actions/workflows/build-stage.yml/badge.svg'/>
+    </a>
+    <a href="https://lgtm.com/projects/g/KHC-ZhiHao/pors/context:javascript">
+        <img src="https://img.shields.io/lgtm/grade/javascript/g/KHC-ZhiHao/pors.svg?logo=lgtm&logoWidth=18"/>
     </a>
     <a href="https://coveralls.io/github/KHC-ZhiHao/pors?branch=master">
         <img src="https://coveralls.io/repos/github/KHC-ZhiHao/pors/badge.svg?branch=master" alt="Coverage Status"  style="max-width:100%;">
@@ -12,19 +17,21 @@
     <a href="https://standardjs.com/">
         <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard Code Style"  style="max-width:100%;">
     </a>
-    <a href="https://github.com/KHC-ZhiHao/pors"><img src="https://img.shields.io/github/stars/KHC-ZhiHao/pors.svg?style=social"></a>
+    <a href="https://github.com/KHC-ZhiHao/pors">
+        <img src="https://img.shields.io/github/stars/KHC-ZhiHao/pors.svg?style=social">
+    </a>
     <br>
 </p>
 
 <br>
 
-`pors`是一個簡單的批次執行排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
+`pors` 是一個簡單的批次執行排程系統，能夠批量處理函式，這模式有很多人做過了，但都不能夠同時兼任棋子和塞子的角色，所以又花了一點時間做了這個。
 
 ---
 
 ## 棋子 - pawn
 
-`pawn`是一個常駐物件，你可以不斷推送執行續給`pawn`，它會直接執行，若超過同步執行量則會限制同步運行的數量。
+`pawn` 是一個常駐物件，你可以不斷推送執行續給 `pawn`，它會直接執行，若超過同步執行量則會限制同步運行的數量。
 
 ### Example
 
@@ -90,7 +97,7 @@ setTimeout(() => {
 
 ### 透過 Async Function
 
-可以透過 `addAsync` 省略 done、error 等 callback：
+可以透過 `addAsync` 省略 `done`、`error` 等 `callback`：
 
 ```js
 import { pawn } from 'pors'
@@ -132,7 +139,7 @@ pawn.on('empty', () => {
 
 ##### 建議使用onEmpty
 
-跟 on 不同的地方在於onEmpty宣告的當下若已經沒有執行續，會觸發一次callback。
+跟 `on` 不同的地方在於 `onEmpty` 宣告的當下若已經沒有執行續，會觸發一次 `callback`。
 
 ```js
 let pawn = pawn()
@@ -171,14 +178,14 @@ pw.add(done => done())
 
 ### 取消監聽
 
-`event`事件呼叫後會回傳一個`listener`物件，藉由宣告`off`取消監聽：
+`event` 事件呼叫後會回傳一個 `listener` 物件，藉由宣告 `off` 取消監聽：
 
 ```js
 let listener = pawn().on('done', (event) => {})
 listener.off()
 ```
 
-藉由`off`與id接口取消`event`：
+藉由 `off` 與id接口取消 `event`：
 
 ```js
 let pw = pawn()
@@ -226,7 +233,7 @@ pawn().add((done, error) => {
 
 ## 批量處裡
 
-`each`可以一次迭代一個陣列：
+`each` 可以一次迭代一個陣列：
 
 ```js
 pawn().each([1,2,3,4], (value, index, done, error) => {
@@ -247,7 +254,7 @@ pawn().each(5, (value, index, done, error) => {
 
 ## 清空排程
 
-`clear`可以清空所有正在等待執行的排程：
+`clear` 可以清空所有正在等待執行的排程：
 
 ```js
 pawn().add(d => d()).clear()
@@ -281,7 +288,7 @@ stopper(2) // 一次允許的執行量，無填入則不會限制
 
 ### 錯誤處理
 
-塞子在宣告error後會直接中斷所有程序，並將result傳入callback：
+塞子在宣告 `error` 後會直接中斷所有程序，並將 `result` 傳入 `callback`：
 
 ```js
 import { stopper } from 'pors'
@@ -324,7 +331,7 @@ step.on('process', ({ loaded, totalThread }) => {
 
 ### 關閉程序
 
-執行start後會得到一個`process`物件，宣告`close`可以中斷執行續：
+執行 `start` 後會得到一個 `process` 物件，宣告 `close` 可以中斷執行續：
 
 ```js
 import { stopper } from 'pors'

@@ -1,6 +1,9 @@
 <br>
 <p align="center"><img src="./logo.png"></p>
-<p align="center" style="font-size:2em">Pors</p>
+
+<h1 align="center">Pors</h1>
+<h3 align="center">Flow Control System</h3>
+
 <p align="center">
     <a href="https://www.npmjs.com/package/pors">
         <img src="https://img.shields.io/npm/v/pors.svg">

@@ -1,6 +1,6 @@
 {
   "name": "pors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Flow control system",
   "main": "dist/index.js",
   "directories": {
@@ -10,6 +10,19 @@
     "test": "nyc mocha --require ts-node/register ./test/*.ts --timeout 2000",
     "build": "npm run test && cross-env webpack --progress --hide-modules",
     "coverage": "nyc --reporter=lcov npm test"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.js",
+      "**/*.d.ts",
+      "node_modules",
+      "example/**/*.ts",
+      "test/**/*.ts"
+    ],
+    "all": true
   },
   "repository": {
     "type": "git",

@@ -4,15 +4,12 @@
 <h1 align="center">Pors</h1>
 <h3 align="center">Flow control system</h3>
 
-<p align="center">
+<h6 align="center">
     <a href="https://www.npmjs.com/package/pors">
         <img src="https://img.shields.io/npm/v/pors.svg">
     </a>
     <a href='https://github.com/KHC-ZhiHao/pors/actions'>
         <img src='https://github.com/KHC-ZhiHao/pors/actions/workflows/build-stage.yml/badge.svg'/>
-    </a>
-    <a href="https://lgtm.com/projects/g/KHC-ZhiHao/pors/context:javascript">
-        <img src="https://img.shields.io/lgtm/grade/javascript/g/KHC-ZhiHao/pors.svg?logo=lgtm&logoWidth=18"/>
     </a>
     <a href="https://coveralls.io/github/KHC-ZhiHao/pors?branch=master">
         <img src="https://coveralls.io/repos/github/KHC-ZhiHao/pors/badge.svg?branch=master" alt="Coverage Status"  style="max-width:100%;">
@@ -24,7 +21,7 @@
         <img src="https://img.shields.io/github/stars/KHC-ZhiHao/pors.svg?style=social">
     </a>
     <br>
-</p>
+</h6>
 
 <br>
 
